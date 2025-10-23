@@ -120,8 +120,7 @@ fn main() {
     mul_vals(&vec);
     mul_vals(&vec);
     mul_vals_vec(vec.clone());
-    mul_vals_vec(vec.clone());
-    
+    mul_vals_vec(vec);
     
     let string: String = String::from("elo");
     let str_slice: &str = "pa";
