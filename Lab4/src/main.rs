@@ -86,6 +86,8 @@ fn bulk_read(stream: &mut TcpStream, size: usize) -> io::Result<Vec<u8>> {
 fn handle_client(stream: TcpStream) -> io::Result<()> {
     let mut buf:Vec<u8>;
     buf = bulk_read(&mut stream, 1)?;
+    let path_len = buf[0] as usize;
+    buf = bulk_read(&mut stream, path_len)?;
     let conv_res =  PathBuf::from_str(String::from_utf8(buf).unwrap().as_str());
     match conv_res {
         Err(_) => {
@@ -118,8 +120,6 @@ fn handle_client(stream: TcpStream) -> io::Result<()> {
             }
         }
     }
-    
-    
 }
 fn main() {
     divisors_benchmark();
