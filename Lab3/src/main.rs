@@ -159,7 +159,27 @@ impl E {
     }
 }
 
-fn main() {}
+fn main() {
+    let one = Const::Numeric(1);
+    let e = Const::Named("e".to_string());
+    let x = Var::X;
+    let y = Var::Y;
+    let z = Var::Z;
+    let x1 = E::add(E::constant(one), E::var(x));
+    let f = E::func("f".to_string(), x1);
+    let enegneg = E::neg(E::neg(E::constant(e)));
+    let yinvinv = E::inv(E::inv(E::var(y)));
+    let mut exp = E::add(E::mul(f, E::mul(enegneg,yinvinv)), E::var(z));
+    exp = exp.uninv().unneg();
+    let dedx = exp.diff(x);
+    let ac = dedx.arg_count();
+    
+    println!("{}", dedx.to_string());
+    println!("Arg count: {ac}");
+    
+    let dedx2 = dedx.substitute("X", E::constant(Const::Numeric(2)));
+    println!("{}", dedx2.to_string());
+}
 
 #[cfg(test)]
 mod tests {
